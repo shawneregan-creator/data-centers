@@ -1,40 +1,44 @@
 {
-  "rows": 3,
-  "previous_rows": 3,
+  "rows": 4,
+  "curated_rows": 4,
+  "previous_curated_rows": 1,
   "unverified": 3,
-  "threads": 3,
+  "threads": 4,
   "updated": "September 29, 2026",
-  "updated_iso": "2026-09-29T18:56:59+00:00",
+  "updated_iso": "2026-09-29T19:01:39+00:00",
   "source_name": "Compiled from primary government and utility records",
   "source_url": "https://shawneregan-creator.github.io/data-centers",
   "facets": {
     "state": {
       "VA": 1,
       "GA": 1,
-      "IN": 1
+      "IN": 1,
+      "NC": 1
     },
     "gov_level": {
-      "county": 1,
+      "county": 2,
       "state": 1,
       "utility": 1
     },
     "policy_type": {
+      "moratorium": 2,
       "zoning": 1,
-      "moratorium": 1,
       "large_load_rules": 1
     },
     "status": {
       "proposed": 1,
       "introduced": 1,
-      "approved": 1
+      "approved": 1,
+      "adopted": 1
     },
     "resource_issue": {
-      "power": 2,
-      "none": 1
+      "none": 2,
+      "power": 2
     }
   },
   "by_month": {
     "2026-09": 2,
-    "2026-08": 1
+    "2026-08": 1,
+    "2026-02": 1
   }
 }

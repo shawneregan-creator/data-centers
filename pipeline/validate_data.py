@@ -97,12 +97,16 @@ def validate():
             problems.append(f"source_url is not a URL: {', '.join(bad_url.tolist()[:3])}")
 
     # --- a broken source should not silently gut the site ----------------
+    # Compare the CURATED count, not the published one: require_verified
+    # deliberately holds rows back, and that must not look like breakage.
     meta_path = DATA / "meta.json"
     if meta_path.exists():
-        previous = json.loads(meta_path.read_text()).get("previous_rows")
-        if previous and len(df) < previous * 0.5:
+        meta = json.loads(meta_path.read_text())
+        previous = meta.get("previous_curated_rows")
+        current = meta.get("curated_rows", len(df))
+        if previous and current < previous * 0.5:
             problems.append(
-                f"row count fell from {previous} to {len(df)} - "
+                f"curated row count fell from {previous} to {current} - "
                 "that looks like a broken source, not real change")
 
     if problems:

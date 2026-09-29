@@ -60,11 +60,14 @@ def transform():
                                             na_position="last").drop(columns="_sort")
 
     # --- publish gate ---------------------------------------------------
+    # curated_rows is the size of the dataset a person maintains. rows is what
+    # actually ships. The breakage guard watches the former, because holding
+    # rows back is a policy decision, not a broken source.
+    curated_rows = len(df)
     if cfg.get("require_verified"):
-        before = len(df)
         df = df[df["verified"] == "yes"]
-        if len(df) < before:
-            print(f"require_verified: held back {before - len(df)} unverified row(s)")
+        if len(df) < curated_rows:
+            print(f"require_verified: held back {curated_rows - len(df)} unverified row(s)")
 
     out = DATA / "site_data.csv"
     df.to_csv(out, index=False)
@@ -76,13 +79,14 @@ def transform():
     # Snapshot the PREVIOUS row count before we overwrite meta.json, so
     # validate_data.py has something real to compare today's count against.
     meta_path = DATA / "meta.json"
-    previous_rows = None
+    previous_curated = None
     if meta_path.exists():
-        previous_rows = json.loads(meta_path.read_text()).get("rows")
+        previous_curated = json.loads(meta_path.read_text()).get("curated_rows")
 
     write_json(meta_path, {
         "rows": int(len(df)),
-        "previous_rows": previous_rows,
+        "curated_rows": int(curated_rows),
+        "previous_curated_rows": previous_curated,
         "unverified": int((df["verified"] != "yes").sum()),
         "threads": int(df["thread_id"].replace("", pd.NA).nunique()),
         "updated": datetime.now(timezone.utc).strftime("%B %d, %Y"),
