@@ -4,59 +4,116 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Project title goes here</title>
-<meta name="description" content="One sentence, under 160 characters, for search results and link previews.">
-<link rel="canonical" href="https://example.manhattan.institute/">
+<title>U.S. Data Center Policy Tracker</title>
+<meta name="description" content="Zoning fights, moratoria, tax deals, tariffs and PUC dockets shaping where data centers get built. One row per government or utility action.">
+<link rel="canonical" href="https://shawneregan-creator.github.io/data-centers/">
 
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://example.manhattan.institute/">
-<meta property="og:title" content="The one sentence someone should remember">
-<meta property="og:description" content="One sentence, under 160 characters, for search results and link previews.">
-<meta property="og:image" content="https://example.manhattan.institute/preview.png">
+<meta property="og:url" content="https://shawneregan-creator.github.io/data-centers/">
+<meta property="og:title" content="A continuously updated database of state, local, and utility actions affecting U.S. data-center development.">
+<meta property="og:description" content="Zoning fights, moratoria, tax deals, tariffs and PUC dockets shaping where data centers get built. One row per government or utility action.">
+<meta property="og:image" content="https://shawneregan-creator.github.io/data-centers/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <style>
   :root{
     --accent: #14366b;
-    --paper:#fff; --ink:#111; --ink-2:#56544e; --rule:#e2e0d9; --bar:#e8e6df;
+    --paper:#fff; --ink:#111; --ink-2:#56544e; --ink-3:#807c73;
+    --rule:#e2e0d9; --field:#faf9f6; --surface-1:#fcfcfb;
+    --bin0:#eceae3; --bin1:#cde2fb; --bin2:#9ec5f4; --bin3:#6da7ec;
+    --bin4:#2a78d6; --bin5:#184f95; --mark:#2a78d6;
+    --warn-ink:#8a5c00; --warn-line:#c98500;
     color-scheme: light dark;
   }
   @media (prefers-color-scheme: dark){
-    :root{ --paper:#12121a; --ink:#f0eee8; --ink-2:#a8a49a; --rule:#2e2d35; --bar:#24242e; }
+    :root{
+      --paper:#12121a; --ink:#f0eee8; --ink-2:#a8a49a; --ink-3:#8b8780;
+      --rule:#2e2d35; --field:#1b1b24; --surface-1:#1a1a19;
+      --bin0:#26262f; --bin1:#104281; --bin2:#1c5cab; --bin3:#2a78d6;
+      --bin4:#5598e7; --bin5:#86b6ef; --mark:#3987e5;
+      --warn-ink:#eda100; --warn-line:#eda100;
+    }
   }
   *{box-sizing:border-box}
   body{
     margin:0; background:var(--paper); color:var(--ink);
     font: 17px/1.55 ui-serif, Georgia, "Times New Roman", serif;
   }
-  .wrap{max-width:52rem; margin:0 auto; padding:3rem 1.25rem 5rem}
-  header{border-bottom:2px solid var(--ink); padding-bottom:1rem; margin-bottom:2rem}
-  h1{font-size:clamp(1.8rem,5vw,2.6rem); line-height:1.1; margin:0 0 .5rem}
-  .standfirst{margin:0; color:var(--ink-2); max-width:34rem}
-  h2{font-size:1.2rem; margin:2.5rem 0 .75rem}
+  .wrap{max-width:64rem; margin:0 auto; padding:3rem 1.25rem 5rem}
+  header{border-bottom:2px solid var(--ink); padding-bottom:1rem; margin-bottom:1.5rem}
+  h1{font-size:clamp(1.7rem,4.5vw,2.5rem); line-height:1.1; margin:0 0 .5rem}
+  .standfirst{margin:0; color:var(--ink-2); max-width:40rem}
+  h2{font-size:1.05rem; margin:2.25rem 0 .6rem; text-transform:uppercase;
+     letter-spacing:.07em; font-family:system-ui,sans-serif; color:var(--ink-2)}
   a{color:var(--accent)}
   @media (prefers-color-scheme: dark){ a{color:#9fc0f2} }
 
-  .chart{margin:1.5rem 0; display:grid; gap:.4rem}
-  .row{display:grid; grid-template-columns:minmax(6rem,10rem) 1fr auto; gap:.6rem; align-items:center}
-  .row .name{font-size:.9rem; color:var(--ink-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-  .track{background:var(--bar); height:1.4rem; position:relative}
-  .fill{background:var(--accent); height:100%}
-  .num{font-variant-numeric:tabular-nums; font-size:.9rem}
+  .tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(8rem,1fr)); gap:.75rem; margin:1.25rem 0}
+  .tile{border:1px solid var(--rule); padding:.7rem .85rem; background:var(--surface-1)}
+  .tile .n{font-size:1.7rem; line-height:1; font-variant-numeric:tabular-nums}
+  .tile .k{font-size:.72rem; text-transform:uppercase; letter-spacing:.06em;
+           color:var(--ink-2); font-family:system-ui,sans-serif; margin-top:.3rem}
 
-  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
-  table{border-collapse:collapse; width:100%; font-size:.92rem; min-width:30rem}
-  th,td{text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--rule)}
-  th{font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-2)}
-  td:not(:first-child){font-variant-numeric:tabular-nums}
+  .filters{display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; padding:.85rem;
+           border:1px solid var(--rule); background:var(--surface-1); margin-bottom:.75rem}
+  .filters input, .filters select{
+    font-family:system-ui,sans-serif; font-size:.85rem; padding:.4rem .5rem;
+    border:1px solid var(--rule); background:var(--field); color:var(--ink); min-height:2.2rem;
+  }
+  .filters input[type=search]{flex:1 1 14rem; min-width:9rem}
+  .btn{font-family:system-ui,sans-serif; font-size:.85rem; cursor:pointer; padding:.4rem .7rem;
+       border:1px solid var(--rule); background:var(--field); color:var(--ink); min-height:2.2rem}
+  .btn[aria-pressed=true]{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .count{font-family:system-ui,sans-serif; font-size:.85rem; color:var(--ink-2); margin-left:auto}
 
-  footer{margin-top:3.5rem; border-top:1px solid var(--rule); padding-top:1rem; font-size:.88rem; color:var(--ink-2)}
-  footer p{margin:.4rem 0; max-width:34rem}
+  .mapwrap{overflow-x:auto}
+  .usmap{display:grid; grid-template-columns:repeat(12,minmax(2rem,1fr));
+         gap:3px; min-width:28rem; margin:.5rem 0}
+  .st{aspect-ratio:1/1; border:0; padding:0; cursor:pointer; background:var(--bin0);
+      color:var(--ink); font-family:system-ui,sans-serif; font-size:.7rem; font-weight:600;
+      display:flex; align-items:center; justify-content:center}
+  .st[data-on="1"]{outline:2px solid var(--accent); outline-offset:1px}
+  .st:hover{outline:2px solid var(--ink)}
+  .st.d1{background:var(--bin1)} .st.d2{background:var(--bin2)}
+  .st.d3{background:var(--bin3)} .st.d4{background:var(--bin4); color:#fff}
+  .st.d5{background:var(--bin5); color:#fff}
+  .legend{display:flex; align-items:center; gap:.35rem; font-family:system-ui,sans-serif;
+          font-size:.75rem; color:var(--ink-2); margin-top:.4rem; flex-wrap:wrap}
+  .sw{width:1.4rem; height:.7rem; display:inline-block; border:1px solid var(--rule)}
+
+  .timeline{display:flex; align-items:flex-end; gap:2px; height:5.5rem;
+            border-bottom:1px solid var(--rule); margin:.5rem 0 .25rem}
+  .tb{flex:1 1 0; min-width:3px; background:var(--mark); border-radius:2px 2px 0 0}
+  .tb:hover{opacity:.7}
+  .tlabels{display:flex; justify-content:space-between; font-family:system-ui,sans-serif;
+           font-size:.72rem; color:var(--ink-3)}
+
+  .ev{border-bottom:1px solid var(--rule); padding:.9rem 0}
+  .ev .line1{font-family:system-ui,sans-serif; font-size:.78rem; color:var(--ink-2);
+             text-transform:uppercase; letter-spacing:.05em; margin-bottom:.25rem}
+  .ev .sum{margin:.15rem 0 .35rem}
+  .ev .meta{font-family:system-ui,sans-serif; font-size:.78rem; color:var(--ink-3);
+            display:flex; flex-wrap:wrap; gap:.5rem; align-items:center}
+  .pill{border:1px solid var(--rule); padding:.08rem .4rem; font-size:.72rem;
+        font-family:system-ui,sans-serif; color:var(--ink-2); white-space:nowrap}
+  .unver{border-color:var(--warn-line); color:var(--warn-ink)}
+
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse; width:100%; font-size:.82rem;
+        font-family:system-ui,sans-serif; min-width:56rem}
+  th,td{text-align:left; padding:.4rem .6rem; border-bottom:1px solid var(--rule); vertical-align:top}
+  th{font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-2)}
+  .hidden{display:none}
+  .empty{padding:2rem 0; color:var(--ink-2); font-style:italic}
+
+  footer{margin-top:3.5rem; border-top:1px solid var(--rule); padding-top:1rem;
+         font-size:.88rem; color:var(--ink-2)}
+  footer p{margin:.4rem 0; max-width:40rem}
   .dl{display:inline-block; margin-top:.5rem; font-size:.9rem}
 </style>
 </head>
@@ -64,114 +121,224 @@
 <div class="wrap">
 
   <header>
-    <h1>The one sentence someone should remember</h1>
-    <p class="standfirst">One sentence, under 160 characters, for search results and link previews.</p>
+    <h1>A continuously updated database of state, local, and utility actions affecting U.S. data-center development.</h1>
+    <p class="standfirst">Zoning fights, moratoria, tax deals, tariffs and PUC dockets shaping where data centers get built. One row per government or utility action.</p>
   </header>
 
-  <h2>Value by label</h2>
-  <div class="chart">
-    
-    <div class="row">
-      <span class="name">California</span>
-      <span class="track"><span class="fill" style="width: 100.0%"></span></span>
-      <span class="num">1,204</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Florida</span>
-      <span class="track"><span class="fill" style="width: 81.6%"></span></span>
-      <span class="num">982</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Georgia</span>
-      <span class="track"><span class="fill" style="width: 42.4%"></span></span>
-      <span class="num">511</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Arizona</span>
-      <span class="track"><span class="fill" style="width: 26.4%"></span></span>
-      <span class="num">318</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Colorado</span>
-      <span class="track"><span class="fill" style="width: 22.0%"></span></span>
-      <span class="num">265</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Alabama</span>
-      <span class="track"><span class="fill" style="width: 11.8%"></span></span>
-      <span class="num">142</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Connecticut</span>
-      <span class="track"><span class="fill" style="width: 9.8%"></span></span>
-      <span class="num">118</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Arkansas</span>
-      <span class="track"><span class="fill" style="width: 8.1%"></span></span>
-      <span class="num">97</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Delaware</span>
-      <span class="track"><span class="fill" style="width: 3.7%"></span></span>
-      <span class="num">44</span>
-    </div>
-    
-    <div class="row">
-      <span class="name">Alaska</span>
-      <span class="track"><span class="fill" style="width: 2.6%"></span></span>
-      <span class="num">31</span>
-    </div>
-    
+  <div class="tiles">
+    <div class="tile"><div class="n" id="t-events">0</div><div class="k">Events shown</div></div>
+    <div class="tile"><div class="n" id="t-states">0</div><div class="k">States</div></div>
+    <div class="tile"><div class="n" id="t-threads">0</div><div class="k">Distinct proposals</div></div>
+    <div class="tile"><div class="n" id="t-unver">0</div><div class="k">Awaiting verification</div></div>
   </div>
 
-  <h2>The data</h2>
-  <div class="scroll">
+  <h2>Filter</h2>
+  <div class="filters">
+    <input type="search" id="q" placeholder="Search summary, locality, actor, docket..." aria-label="Search events">
+    <select id="f-gov_level" aria-label="Government level"><option value="">All levels</option></select>
+    <select id="f-policy_type" aria-label="Policy type"><option value="">All policy types</option></select>
+    <select id="f-status" aria-label="Status"><option value="">All statuses</option></select>
+    <select id="f-resource_issue" aria-label="Resource issue"><option value="">Power / water</option></select>
+    <button class="btn" id="clear" type="button">Clear</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <h2>Where</h2>
+  <div class="mapwrap">
+    <div class="usmap" id="usmap" role="group" aria-label="Events by state. Select a state to filter."></div>
+  </div>
+  <div class="legend">
+    <span>Events per state:</span>
+    <span class="sw" style="background:var(--bin0)"></span><span>0</span>
+    <span class="sw" style="background:var(--bin1)"></span>
+    <span class="sw" style="background:var(--bin2)"></span>
+    <span class="sw" style="background:var(--bin3)"></span>
+    <span class="sw" style="background:var(--bin4)"></span>
+    <span class="sw" style="background:var(--bin5)"></span>
+    <span id="legmax">more</span>
+  </div>
+
+  <h2>When</h2>
+  <div class="timeline" id="timeline" role="img" aria-label="Events per month"></div>
+  <div class="tlabels"><span id="tl-from"></span><span id="tl-to"></span></div>
+
+  <h2>Events <button class="btn" id="toggle-table" type="button" aria-pressed="false"
+      style="float:right;margin-top:-.3rem">Table view</button></h2>
+
+  <div id="list"></div>
+
+  <div class="scroll hidden" id="tablewrap">
     <table>
-      <thead>
-        <tr><th>label</th><th>value</th><th>year</th></tr>
-      </thead>
-      <tbody>
-        
-        <tr><td>California</td><td>1204</td><td>2025</td></tr>
-        
-        <tr><td>Florida</td><td>982</td><td>2025</td></tr>
-        
-        <tr><td>Georgia</td><td>511</td><td>2025</td></tr>
-        
-        <tr><td>Arizona</td><td>318</td><td>2025</td></tr>
-        
-        <tr><td>Colorado</td><td>265</td><td>2025</td></tr>
-        
-        <tr><td>Alabama</td><td>142</td><td>2025</td></tr>
-        
-        <tr><td>Connecticut</td><td>118</td><td>2025</td></tr>
-        
-        <tr><td>Arkansas</td><td>97</td><td>2025</td></tr>
-        
-        <tr><td>Delaware</td><td>44</td><td>2025</td></tr>
-        
-        <tr><td>Alaska</td><td>31</td><td>2025</td></tr>
-        
-      </tbody>
+      <thead><tr>
+        <th>Date</th><th>State</th><th>Locality</th><th>Level</th><th>Actor</th>
+        <th>Type</th><th>Status</th><th>MW</th><th>Summary</th><th>Source</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
     </table>
   </div>
 
   <footer>
-    <p><strong>Last updated September 29, 2026.</strong> 10 records.</p>
-    <p>Source: <a href="https://example.org/the-dataset">Name of the dataset</a>. What was counted, what was excluded, and what these numbers cannot show.</p>
-    <p>Compiled by Your name.</p>
+    <p><strong>Last updated September 29, 2026.</strong> 3 records
+       across 3 distinct proposals.</p>
+    <p>Source: <a href="https://shawneregan-creator.github.io/data-centers">Compiled from primary government and utility records</a>. Each row is a discrete action by a government body or regulated utility that affects data-center development: an ordinance, bill, docket order, tariff filing, or permit decision. Commentary, market news, and corporate announcements are excluded unless they trigger a government action. Rows are entered only against a primary source document. Absence of a row is not evidence that nothing happened; coverage of local actions is necessarily incomplete.</p>
+    <p>Compiled by Shawn Regan.</p>
     <a class="dl" href="data.csv" download>Download the raw data (CSV)</a>
   </footer>
 
 </div>
+
+<script>
+const DATA = [{"event_id":"2026-09-28-va-loudoun-setbacks","thread_id":"va-loudoun-setbacks","date":"2026-09-28","date_precision":"day","state":"VA","state_name":"Virginia","locality":"Loudoun County","gov_level":"county","actor":"Loudoun County Board of Supervisors","policy_type":"zoning","status":"proposed","mw_threshold":"","justification":"noise;land_use","resource_issue":"none","docket_number":"","summary":"PLACEHOLDER - unverified. Proposed setback and noise standards for data centers.","source_url":"","source_name":"","secondary_url":"","verified":"no","month":"2026-09","year":"2026"},{"event_id":"2026-09-14-ga-state-moratorium","thread_id":"ga-state-moratorium","date":"2026-09-14","date_precision":"day","state":"GA","state_name":"Georgia","locality":"State legislature","gov_level":"state","actor":"Georgia General Assembly","policy_type":"moratorium","status":"introduced","mw_threshold":"","justification":"ratepayer_cost;local_control","resource_issue":"power","docket_number":"","summary":"PLACEHOLDER - unverified. Bill would restrict local approval of new data centers.","source_url":"","source_name":"","secondary_url":"","verified":"no","month":"2026-09","year":"2026"},{"event_id":"2026-08-00-in-im-large-load","thread_id":"in-im-large-load-tariff","date":"2026-08-01","date_precision":"month","state":"IN","state_name":"Indiana","locality":"Statewide","gov_level":"utility","actor":"Indiana Michigan Power","policy_type":"large_load_rules","status":"approved","mw_threshold":"150","justification":"ratepayer_cost;grid_reliability","resource_issue":"power","docket_number":"","summary":"PLACEHOLDER - unverified. Large-load tariff imposing multi-year commitments above a MW threshold.","source_url":"","source_name":"","secondary_url":"","verified":"no","month":"2026-08","year":"2026"}];
+const GRID = {
+ AK:[1,1], ME:[12,1], VT:[11,2], NH:[12,2],
+ WA:[2,3], ID:[3,3], MT:[4,3], ND:[5,3], MN:[6,3], IL:[7,3], WI:[8,3], MI:[9,3], NY:[10,3], MA:[11,3],
+ OR:[2,4], NV:[3,4], WY:[4,4], SD:[5,4], IA:[6,4], IN:[7,4], OH:[8,4], PA:[9,4], NJ:[10,4], CT:[11,4], RI:[12,4],
+ CA:[2,5], UT:[3,5], CO:[4,5], NE:[5,5], MO:[6,5], KY:[7,5], WV:[8,5], VA:[9,5], MD:[10,5], DE:[11,5],
+ AZ:[3,6], NM:[4,6], KS:[5,6], AR:[6,6], TN:[7,6], NC:[8,6], SC:[9,6], DC:[10,6],
+ OK:[5,7], LA:[6,7], MS:[7,7], AL:[8,7], GA:[9,7],
+ HI:[1,8], TX:[5,8], FL:[10,8]
+};
+const SELECTS = ["gov_level","policy_type","status","resource_issue"];
+const ENT = {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"};
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ENT[c]);
+const pretty = s => String(s || "").replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+let state = {q:"", gov_level:"", policy_type:"", status:"", resource_issue:"", st:""};
+
+for (const f of SELECTS){
+  const el = document.getElementById("f-" + f);
+  [...new Set(DATA.map(r => r[f]).filter(Boolean))].sort()
+    .forEach(v => el.add(new Option(pretty(v), v)));
+  el.addEventListener("change", () => { state[f] = el.value; render(); });
+}
+document.getElementById("q").addEventListener("input", e => {
+  state.q = e.target.value.toLowerCase(); render();
+});
+document.getElementById("clear").addEventListener("click", () => {
+  state = {q:"", gov_level:"", policy_type:"", status:"", resource_issue:"", st:""};
+  document.getElementById("q").value = "";
+  SELECTS.forEach(f => { document.getElementById("f-" + f).value = ""; });
+  render();
+});
+document.getElementById("toggle-table").addEventListener("click", e => {
+  const on = e.currentTarget.getAttribute("aria-pressed") === "true";
+  e.currentTarget.setAttribute("aria-pressed", String(!on));
+  document.getElementById("tablewrap").classList.toggle("hidden", on);
+  document.getElementById("list").classList.toggle("hidden", !on);
+});
+
+const mapEl = document.getElementById("usmap");
+for (const ab of Object.keys(GRID)){
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "st"; b.textContent = ab;
+  b.style.gridColumn = GRID[ab][0]; b.style.gridRow = GRID[ab][1];
+  b.addEventListener("click", () => { state.st = (state.st === ab) ? "" : ab; render(); });
+  mapEl.appendChild(b);
+}
+
+function match(r){
+  if (state.st && r.state !== state.st) return false;
+  for (const f of SELECTS) if (state[f] && r[f] !== state[f]) return false;
+  if (state.q){
+    const hay = [r.summary, r.locality, r.actor, r.docket_number, r.state_name, r.policy_type]
+      .join(" ").toLowerCase();
+    if (!hay.includes(state.q)) return false;
+  }
+  return true;
+}
+
+// Full observed month span, so gaps read as gaps rather than being collapsed.
+function monthSpan(){
+  const ms = [...new Set(DATA.map(r => r.month).filter(Boolean))].sort();
+  if (!ms.length) return [];
+  const out = [];
+  let [y, m] = ms[0].split("-").map(Number);
+  const [ey, em] = ms[ms.length - 1].split("-").map(Number);
+  while (y < ey || (y === ey && m <= em)){
+    out.push(y + "-" + String(m).padStart(2, "0"));
+    m++; if (m > 12){ m = 1; y++; }
+  }
+  return out;
+}
+const SPAN = monthSpan();
+
+function render(){
+  const rows = DATA.filter(match);
+
+  document.getElementById("t-events").textContent = rows.length;
+  document.getElementById("t-states").textContent = new Set(rows.map(r => r.state).filter(Boolean)).size;
+  document.getElementById("t-threads").textContent = new Set(rows.map(r => r.thread_id).filter(Boolean)).size;
+  document.getElementById("t-unver").textContent = rows.filter(r => r.verified !== "yes").length;
+  document.getElementById("count").textContent = rows.length === DATA.length
+    ? DATA.length + " events"
+    : rows.length + " of " + DATA.length + " events";
+
+  const byState = {};
+  rows.forEach(r => { if (r.state) byState[r.state] = (byState[r.state] || 0) + 1; });
+  const max = Math.max(1, ...Object.values(byState));
+  document.getElementById("legmax").textContent = max + (max === 1 ? " event" : " events");
+  for (const b of mapEl.children){
+    const n = byState[b.textContent] || 0;
+    b.className = "st" + (n ? " d" + Math.max(1, Math.ceil(n / max * 5)) : "");
+    b.dataset.on = state.st === b.textContent ? "1" : "0";
+    const label = b.textContent + ": " + n + (n === 1 ? " event" : " events");
+    b.title = label;
+    b.setAttribute("aria-label", label);
+  }
+
+  const tl = document.getElementById("timeline");
+  tl.innerHTML = "";
+  const cnt = {};
+  rows.forEach(r => { if (r.month) cnt[r.month] = (cnt[r.month] || 0) + 1; });
+  const mx = Math.max(1, ...Object.values(cnt));
+  SPAN.forEach(k => {
+    const n = cnt[k] || 0;
+    const d = document.createElement("div");
+    d.className = "tb";
+    d.style.height = (n ? Math.max(4, n / mx * 100) : 1) + "%";
+    d.style.opacity = n ? "1" : ".25";
+    d.title = k + ": " + n + (n === 1 ? " event" : " events");
+    tl.appendChild(d);
+  });
+  document.getElementById("tl-from").textContent = SPAN[0] || "";
+  document.getElementById("tl-to").textContent = SPAN[SPAN.length - 1] || "";
+
+  const list = document.getElementById("list");
+  if (!rows.length){
+    list.innerHTML = '<p class="empty">No events match these filters.</p>';
+  } else {
+    list.innerHTML = rows.map(r => {
+      const when = r.date_precision === "day" ? r.date : (r.month || r.year || r.date);
+      const head = [r.state_name, r.locality, when, pretty(r.policy_type), pretty(r.status)]
+        .filter(Boolean).map(esc).join(" &middot; ");
+      const bits = [];
+      if (r.actor) bits.push('<span class="pill">' + esc(r.actor) + '</span>');
+      if (r.mw_threshold) bits.push('<span class="pill">' + esc(r.mw_threshold) + ' MW threshold</span>');
+      if (r.resource_issue && r.resource_issue !== "none")
+        bits.push('<span class="pill">' + esc(pretty(r.resource_issue)) + '</span>');
+      String(r.justification || "").split(";").filter(Boolean)
+        .forEach(j => bits.push('<span class="pill">' + esc(pretty(j)) + '</span>'));
+      if (r.docket_number) bits.push('<span class="pill">' + esc(r.docket_number) + '</span>');
+      if (r.source_url)
+        bits.push('<a href="' + esc(r.source_url) + '">' + esc(r.source_name || "Source") + '</a>');
+      if (r.verified !== "yes") bits.push('<span class="pill unver">Unverified</span>');
+      return '<div class="ev"><div class="line1">' + head + '</div>' +
+             '<p class="sum">' + esc(r.summary) + '</p>' +
+             '<div class="meta">' + bits.join("") + '</div></div>';
+    }).join("");
+  }
+
+  document.getElementById("tbody").innerHTML = rows.map(r =>
+    "<tr>" +
+    [r.date, r.state, r.locality, pretty(r.gov_level), r.actor,
+     pretty(r.policy_type), pretty(r.status), r.mw_threshold, r.summary]
+      .map(v => "<td>" + esc(v) + "</td>").join("") +
+    "<td>" + (r.source_url ? '<a href="' + esc(r.source_url) + '">link</a>' : "") + "</td>" +
+    "</tr>"
+  ).join("");
+}
+
+render();
+</script>
 </body>
 </html>

@@ -37,6 +37,16 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Harvest candidates
+        # Discovery only. Writes data/candidates.csv for human review; it
+        # cannot touch data/events.csv. A failure here must not block the
+        # rebuild of the existing site, hence continue-on-error.
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: python pipeline/harvest.py
+
       - name: Run the pipeline
         env:
           # Only needed if your pipeline calls an API. Set it under
