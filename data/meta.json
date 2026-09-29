@@ -1,43 +1,76 @@
 {
-  "rows": 4,
-  "curated_rows": 4,
+  "rows": 39,
+  "curated_rows": 39,
   "previous_curated_rows": 4,
-  "unverified": 3,
-  "threads": 4,
+  "unverified": 29,
+  "threads": 33,
   "updated": "September 29, 2026",
-  "updated_iso": "2026-09-29T19:04:54+00:00",
+  "updated_iso": "2026-09-29T19:12:05+00:00",
   "source_name": "Compiled from primary government and utility records",
   "source_url": "https://shawneregan-creator.github.io/data-centers",
   "facets": {
     "state": {
+      "CA": 8,
+      "NC": 4,
+      "PA": 3,
+      "WI": 2,
+      "CO": 2,
+      "TX": 2,
+      "FL": 2,
+      "GA": 2,
+      "IN": 2,
+      "KY": 1,
+      "NM": 1,
       "VA": 1,
-      "GA": 1,
-      "IN": 1,
-      "NC": 1
+      "MI": 1,
+      "MO": 1,
+      "ID": 1,
+      "AZ": 1,
+      "SC": 1,
+      "MD": 1,
+      "NV": 1,
+      "RI": 1,
+      "US": 1
     },
     "gov_level": {
-      "county": 2,
-      "state": 1,
-      "utility": 1
+      "county": 13,
+      "municipal": 11,
+      "state": 10,
+      "utility": 2,
+      "puc": 2,
+      "federal": 1
     },
     "policy_type": {
-      "moratorium": 2,
-      "zoning": 1,
-      "large_load_rules": 1
+      "moratorium": 14,
+      "zoning": 7,
+      "permitting": 4,
+      "tax_incentive": 3,
+      "ratepayer_protection": 3,
+      "large_load_rules": 2,
+      "utility_tariff": 2,
+      "transparency": 2,
+      "interconnection": 1,
+      "water": 1
     },
     "status": {
-      "proposed": 1,
-      "introduced": 1,
-      "approved": 1,
-      "adopted": 1
+      "proposed": 11,
+      "adopted": 9,
+      "enacted": 7,
+      "rejected": 5,
+      "approved": 3,
+      "in_effect": 2,
+      "passed_one_chamber": 1,
+      "introduced": 1
     },
     "resource_issue": {
-      "none": 2,
-      "power": 2
+      "none": 25,
+      "power": 10,
+      "water": 3,
+      "both": 1
     }
   },
   "by_month": {
-    "2026-09": 2,
+    "2026-09": 37,
     "2026-08": 1,
     "2026-02": 1
   }
